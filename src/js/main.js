@@ -1,33 +1,30 @@
-// Import the park data from the module
-import { getParkData } from "./parkService.mjs";
+import { getParkData, getParkInfoLinks } from "./parkService.mjs";
+import { introSectionTemplate, mediaCardTemplate} from "./templates.mjs";
+import setHeaderFooterInfo from "./setHeaderFooter.mjs"
 
-// Get the park object
+
 const parkData = getParkData();
+const parkLinkData = getParkInfoLinks();
 
-// Update the disclaimer link
-const disclaimerLink = document.querySelector(".disclaimer > a");
-disclaimerLink.href = parkData.url;
-disclaimerLink.innerHTML = parkData.fullName;
+// header & footer section
+setHeaderFooterInfo(parkData);
 
-// Update the page title
-document.title = parkData.fullName;
 
-// Update hero image
-const heroImage = document.querySelector(".hero-banner > img");
-heroImage.src = "images/yellowstone-banner.jpg"; // Keep your local banner image
-heroImage.alt = `${parkData.fullName} Banner`;
+// intro section 
 
-// Function to create hero content dynamically
-function parkInfoTemplate(info) {
-  return `
-    <a href="${info.url}" class="hero-banner__title">${info.name}</a>
-    <p class="hero-banner__subtitle">
-      <span>${info.designation}</span>
-      <span>${info.states}</span>
-    </p>
-  `;
+function setParkIntro (infor) {
+  const introSection = document.querySelector(".intro-container");
+  introSection.innerHTML = introSectionTemplate(infor);
 }
 
-// Update hero title, designation, and states
-const heroContent = document.querySelector(".hero-banner__content");
-heroContent.innerHTML = parkInfoTemplate(parkData);
+setParkIntro(parkData);
+
+
+// infor section (cards)
+
+function setParkInfor(data) {
+  const inforHtml = data.map(mediaCardTemplate);
+  document.querySelector(".infor-container").innerHTML = inforHtml.join("");
+};
+
+setParkInfor(parkLinkData);
