@@ -1,3 +1,7 @@
+const baseUrl = "https://developer.nps.gov/api/v1/";
+const apiKey = import.meta.env.VITE_NPS_API_KEY;
+
+
 const park = {
   id: "F58C6D24-8D10-4573-9826-65D42B8B83AD",
   url: "https://www.nps.gov/yell/index.htm",
@@ -202,10 +206,36 @@ const parkInfoLinks = [
   }
 ];
 
+async function getJson(url) {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-Api-Key": apiKey
+    }
+  };
 
-export function getParkData() {
-  return park;
+  let data = {};
+  const response = await fetch(baseUrl + url, options);
+  if (response.ok) {
+    data = await response.json();
+  } else throw new Error("response not ok");
+
+  return data;
 }
+
+export async function getParkData() {
+  const parkData = await getJson("parks?parkCode=glac");
+  return parkData.data[0];
+}
+
+
+// update park images
+export function getInfoLinks(data) {
+  parkInfoLinks.forEach((item, index) => {
+    item.image = data[index+2].url;
+  });
+}
+
 
 export function getParkInfoLinks() {
   return parkInfoLinks;
