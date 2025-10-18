@@ -229,7 +229,7 @@ export async function getParkData() {
 }
 
 
-// update park images
+// update images for park
 export function getInfoLinks(data) {
   parkInfoLinks.forEach((item, index) => {
     item.image = data[index+2].url;
@@ -240,3 +240,20 @@ export function getInfoLinks(data) {
 export function getParkInfoLinks() {
   return parkInfoLinks;
 }
+
+export  async function getAlerts () {
+  const alertData = await getJson("alerts?parkCode=glac")
+  return alertData.data;
+}
+
+export  async function getVisitorCenter () {
+  const alertData = await getJson("visitorcenters?parkCode=glac")
+  return alertData.data;
+}
+
+export async function getActivity() {
+    const parkData = await getJson("parks?parkCode=glac");
+    return parkData.data[0].activities;
+}
+
+

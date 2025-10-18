@@ -1,3 +1,4 @@
+import spritePath from '../images/sprite.symbol.svg';
 
 // banner infor
 export function parkInfoTemplate(infor) {
@@ -52,4 +53,41 @@ export function footerTemplate(info) {
   <h4>Phone:</h4>
   <p>${voice}</p>
   </section>`;
+}
+
+
+// alert 
+export function alertTemplate(alert) {
+  let svgId = "";
+
+  if (alert.category === "Park Closure") {
+    svgId = "alert-closure";
+  } else {
+    svgId = `alert-${alert.category.toLowerCase()}`
+  }
+
+
+  return `<li class="alert">
+        <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="/images/sprite.symbol.svg#${svgId}"></use></svg>
+        <div>
+          <h3 class="${svgId}">${alert.title}</h3>
+          <p>${alert.description}</p>
+        </div>
+    </li>
+  `
+}
+
+export function visitorCenterTemplate(center) {
+    return `<li class="center">
+            <h3>${center.name}</h3>
+            <p>${center.description}</p>
+            <p>${center.directionsInfo}</p>
+      </li>
+    `
+}
+
+export function activitiesTemplate(activity) {
+  return `<li class="activity">
+            <p>${activity.name}</p>
+        </li>`
 }

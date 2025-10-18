@@ -1,6 +1,8 @@
 import { getParkData, getParkInfoLinks, getInfoLinks } from "./parkService.mjs";
 import { introSectionTemplate, mediaCardTemplate} from "./templates.mjs";
 import setHeaderFooterInfo from "./setHeaderFooter.mjs"
+import "../css/style.css";
+import "../css/home.css";
 
 
 // const parkData = getParkData();
@@ -14,7 +16,7 @@ function setParkIntro (infor) {
 
 
 
-// information section (cards)
+// infor section (cards)
 function setParkInfor(data) {
   const inforHtml = data.map(mediaCardTemplate);
   document.querySelector(".infor-container").innerHTML = inforHtml.join("");
