@@ -229,7 +229,7 @@ export async function getParkData() {
 }
 
 
-// update images for park
+// update park images
 export function getInfoLinks(data) {
   parkInfoLinks.forEach((item, index) => {
     item.image = data[index+2].url;
@@ -247,9 +247,15 @@ export  async function getAlerts () {
 }
 
 export  async function getVisitorCenter () {
-  const alertData = await getJson("visitorcenters?parkCode=glac")
-  return alertData.data;
+  const centerData = await getJson("visitorcenters?parkCode=glac")
+  return centerData.data;
 }
+
+export async function getParkVisitorCenterDetails(id) {
+  const parkData = await getJson(`visitorcenters?id=${id}`);
+  return parkData.data[0];
+}
+
 
 export async function getActivity() {
     const parkData = await getJson("parks?parkCode=glac");
@@ -257,3 +263,17 @@ export async function getActivity() {
 }
 
 
+// api returns json like this
+// jsonData = {
+  // "total": "1",
+  // "limit": "50",
+  // "start": "0",
+  // "data": [
+  //   {
+  //     "id": "F58C6D24-81D0-4573-9826-65D42B8B83AD",
+  //     "url": "https://www.nps.gov/yell/index.htm",
+  //     "activities": [ ... ],
+  //     // etc.
+  //   }
+  // ]
+// }
